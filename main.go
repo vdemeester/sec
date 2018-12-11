@@ -237,6 +237,9 @@ func extractDependencies(path string, opts *options) ([]string, error) {
 				log.Warnf("Skip dependency %s : constraint %s", dep, constraint)
 				continue
 			}
+			if constraint == "*" {
+				log.Warnf("Skip dependency %s : no version found '*'", dep)
+			}
 		}
 		if strings.HasSuffix(constraint, "(override)") {
 			log.Warnf("Skip dependency %s : has an override %s", dep, constraint)
