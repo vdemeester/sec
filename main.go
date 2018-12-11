@@ -125,9 +125,12 @@ func cleanRepository(opts *options) error {
 func updateDependency(dep string, opts *options) ([]dependency, error) {
 	log.Infof("Update dependency %s…", dep)
 	updated := []dependency{}
-	// (3/4) Wrote github.com/gorilla/websocket@v1.4.0: version changed (was v1.2.0)
 	var buf = new(bytes.Buffer)
 	if err := execute(context.Background(), []string{"dep", "ensure", "-v", "-update", dep}, buf, opts); err != nil {
+		if strings.Contains(buf.String(), "is not present in Gopkg.lock") {
+			log.Warnf("… dependency disappeared, skiping…")
+			return updated, nil
+		}
 		return updated, err
 	}
 	scanner := bufio.NewScanner(buf)
