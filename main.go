@@ -85,9 +85,10 @@ func run(opts *options) {
 			log.Fatal(err)
 		}
 		if len(updated) == 0 {
-			log.Infof("… no updates for %s", dep)
+			log.Info("… no updates")
 			continue
 		} else {
+			log.Info("… updates found")
 			for _, d := range updated {
 				log.Infof("… - %s : %s -> %s", d.Name, d.OldVersion, d.NewVersion)
 			}
@@ -141,7 +142,7 @@ type dependency struct {
 }
 
 func runCommand(command []string, opts *options) error {
-	log.Infof("Execute command `%s` (timeout %v)… ", strings.Join(command, " "), opts.timeout)
+	log.Infof("… execute command `%s` (timeout %v)… ", strings.Join(command, " "), opts.timeout)
 	ctx, cancel := context.WithTimeout(context.Background(), opts.timeout)
 	defer cancel()
 
@@ -169,7 +170,7 @@ func execute(ctx context.Context, command []string, w io.Writer, opts *options) 
 }
 
 func gitCommit(dep string, updated []dependency, opts *options) error {
-	log.Infof("Commit dependency changes for %s…", dep)
+	log.Infof("… commit dependency changes for %s…", dep)
 	var oldversion, newversion string
 	deps := []dependency{}
 	for _, d := range updated {
