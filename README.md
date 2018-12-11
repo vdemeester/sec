@@ -1,1 +1,1 @@
-# Sec — a golang opiniated dependency updater
+# Sec § — a golang opiniated dependency updater
