@@ -198,10 +198,10 @@ func gitCommit(dep string, updated []dependency, opts *options) error {
 	fmt.Fprintf(&message, "%s: %s -> %s\n", dep, oldversion, newversion)
 	fmt.Fprintln(&message, "")
 	if len(deps) > 0 {
-		fmt.Fprintf(&message, "Additionnal updates…")
+		fmt.Fprintln(&message, "Additionnal updates…")
 	}
 	for _, d := range deps {
-		fmt.Fprintf(&message, "%s: %s -> %s\n", d.Name, d.OldVersion, d.NewVersion)
+		fmt.Fprintf(&message, "\t%s: %s -> %s\n", d.Name, d.OldVersion, d.NewVersion)
 	}
 	addCommand := []string{"git", "add", "Gopkg.lock", "vendor"}
 	if err := execute(context.Background(), addCommand, ioutil.Discard, opts); err != nil {
