@@ -114,6 +114,7 @@ func run(opts *options) {
 }
 
 func cleanRepository(opts *options) error {
+	log.Infof("… clean working copy")
 	rmCommand := []string{"rm", "-fRv", "vendor/"}
 	if err := execute(context.Background(), rmCommand, ioutil.Discard, opts); err != nil {
 		return err
