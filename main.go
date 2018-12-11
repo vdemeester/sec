@@ -95,6 +95,9 @@ func run(opts *options) {
 		}
 		if err := runCommand(command, opts); err != nil {
 			errs = append(errs, err)
+			if ierr := cleanRepository(opts); ierr != nil {
+				log.Fatal(ierr)
+			}
 			continue
 		}
 		if err := gitCommit(dep, updated, opts); err != nil {
@@ -103,11 +106,20 @@ func run(opts *options) {
 	}
 	if len(errs) != 0 {
 		log.Error("There has been some errors while upgrading")
-		for _, err := range errs {
-			log.Error("err")
+		for _, e := range errs {
+			log.Error(e)
 		}
-		log.Fatal(":s'")
+		log.Fatal("§")
 	}
+}
+
+func cleanRepository(opts *options) error {
+	rmCommand := []string{"rm", "-fRv", "vendor/"}
+	if err := execute(context.Background(), rmCommand, ioutil.Discard, opts); err != nil {
+		return err
+	}
+	commitCommand := []string{"git", "reset", "--hard", "HEAD"}
+	return execute(context.Background(), commitCommand, ioutil.Discard, opts)
 }
 
 func updateDependency(dep string, opts *options) ([]dependency, error) {
