@@ -211,7 +211,7 @@ func gitCommit(dep string, updated []dependency, opts *options) error {
 	if err := execute(context.Background(), addCommand, ioutil.Discard, opts); err != nil {
 		return err
 	}
-	commitCommand := []string{"git", "commit", "-sS", "-m", message.String()}
+	commitCommand := []string{"git", "commit", "-s", "-m", message.String()}
 	return execute(context.Background(), commitCommand, ioutil.Discard, opts)
 }
 
