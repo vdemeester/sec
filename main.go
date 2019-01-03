@@ -228,7 +228,7 @@ func extractDependencies(path string, opts *options) ([]string, error) {
 	}
 	scanner := bufio.NewScanner(buf)
 	for scanner.Scan() {
-		log.Debugf("Process dependency", scanner.Text())
+		log.Debugf("Process dependency %s", scanner.Text())
 		components := strings.SplitN(scanner.Text(), ";", 2)
 		dep := components[0]
 		constraint := components[1]
