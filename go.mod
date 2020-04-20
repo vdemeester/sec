@@ -1,4 +1,4 @@
-module go.sbr.pm/nr
+module go.sbr.pm/sec
 
 go 1.14
 

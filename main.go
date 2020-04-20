@@ -1,4 +1,4 @@
-package main // import "go.sbr.pm/nr"
+package main // import "go.sbr.pm/sec"
 
 import (
 	"bufio"
